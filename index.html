@@ -2,7 +2,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <title>Using MySQL and PHP with Google Maps</title>
+    <title>Google Maps</title>
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
@@ -22,31 +22,45 @@
   <body>
     <div id="map"></div>
 
-    <script>
-
+    <script>        
         function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: new google.maps.LatLng(42.600000, 23.300000),
+          center: new google.maps.LatLng(42.697510, 23.324150),
           zoom: 12
         });
         geocoder = new google.maps.Geocoder();
         var infoWindow = new google.maps.InfoWindow;
 
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+
+        // 139-140 is a test
+        var centerControlDiv1 = document.createElement('div1');
+        var centerControl1 = new CenterControl1(centerControlDiv1, map);
+
+        centerControlDiv.index = 1;
+        // 144 is a test
+        centerControlDiv1.index = 2;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+        //147 is a test
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv1);
           
           // Change this depending on the name of your PHP or XML file
           downloadUrl('http://localhost/hello.php', function(data) {
             var xml = data.responseXML;
             var markers = xml.documentElement.getElementsByTagName('marker');
             Array.prototype.forEach.call(markers, function(markerElem) {
-              var id = markerElem.getAttribute('id');
-              var name = markerElem.getAttribute('name');
+              var city = markerElem.getAttribute('city');
+              var name = markerElem.getAttribute('country');
               var point = new google.maps.LatLng(
                   parseFloat(markerElem.getAttribute('lat')),
                   parseFloat(markerElem.getAttribute('lng')));
 
+             //if(point.lat() >= 0 && point.lng() >= 0){
+
               var infowincontent = document.createElement('div');
               var strong = document.createElement('strong');
-              strong.textContent = name
+              strong.textContent = city
               infowincontent.appendChild(strong);
               infowincontent.appendChild(document.createElement('br'));
 
@@ -57,16 +71,207 @@
               var marker = new google.maps.Marker({
                 map: map,
                 position: point,
-                //label: icon.label
+                //label: city
               });
               marker.addListener('click', function() {
                 infoWindow.setContent(infowincontent);
                 infoWindow.open(map, marker);
               });
+              //}
             });
           });
         }
 
+      function upperRight(){
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(42.697510, 23.324150),
+          zoom: 12
+        });
+        geocoder = new google.maps.Geocoder();
+        var infoWindow = new google.maps.InfoWindow;
+
+        /**
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv); */
+
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+        // 139-140 is a test
+        var centerControlDiv1 = document.createElement('div1');
+        var centerControl1 = new CenterControl1(centerControlDiv1, map);
+
+        centerControlDiv.index = 1;
+        // 144 is a test
+        centerControlDiv1.index = 2;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+        //147 is a test
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv1);
+
+        downloadUrl('http://localhost/hello.php', function(data) {
+          var xml = data.responseXML;
+          var markers = xml.documentElement.getElementsByTagName('marker');
+          Array.prototype.forEach.call(markers, function(markerElem) {
+            var city = markerElem.getAttribute('city');
+            var name = markerElem.getAttribute('country');
+            var point = new google.maps.LatLng(
+                parseFloat(markerElem.getAttribute('lat')),
+                parseFloat(markerElem.getAttribute('lng')));
+
+           if(point.lat() >= 0 && point.lng() >= 0){
+
+            var infowincontent = document.createElement('div');
+            var strong = document.createElement('strong');
+            strong.textContent = city
+            infowincontent.appendChild(strong);
+            infowincontent.appendChild(document.createElement('br'));
+
+            var text = document.createElement('text');
+            //text.textContent = address
+            infowincontent.appendChild(text);
+            //var icon = customLabel[type] || {};
+            var marker = new google.maps.Marker({
+              map: map,
+              position: point,
+              //label: city
+            });
+            marker.addListener('click', function() {
+              infoWindow.setContent(infowincontent);
+              infoWindow.open(map, marker);
+            });
+            }
+          });
+        });
+      }
+
+      function upperLeft(){
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(42.697510, 23.324150),
+          zoom: 12
+        });
+        geocoder = new google.maps.Geocoder();
+        var infoWindow = new google.maps.InfoWindow;
+
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+
+        // 139-140 is a test
+        var centerControlDiv1 = document.createElement('div1');
+        var centerControl1 = new CenterControl1(centerControlDiv1, map);
+
+        centerControlDiv.index = 1;
+        // 144 is a test
+        centerControlDiv1.index = 2;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+        //147 is a test
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv1);
+
+        downloadUrl('http://localhost/hello.php', function(data) {
+          var xml = data.responseXML;
+          var markers = xml.documentElement.getElementsByTagName('marker');
+          Array.prototype.forEach.call(markers, function(markerElem) {
+            var city = markerElem.getAttribute('city');
+            var name = markerElem.getAttribute('country');
+            var point = new google.maps.LatLng(
+                parseFloat(markerElem.getAttribute('lat')),
+                parseFloat(markerElem.getAttribute('lng')));
+
+           if(point.lat() >= 0 && point.lng() <= 0){
+
+            var infowincontent = document.createElement('div');
+            var strong = document.createElement('strong');
+            strong.textContent = city
+            infowincontent.appendChild(strong);
+            infowincontent.appendChild(document.createElement('br'));
+
+            var text = document.createElement('text');
+            //text.textContent = address
+            infowincontent.appendChild(text);
+            //var icon = customLabel[type] || {};
+            var marker = new google.maps.Marker({
+              map: map,
+              position: point,
+              //label: city
+            });
+            marker.addListener('click', function() {
+              infoWindow.setContent(infowincontent);
+              infoWindow.open(map, marker);
+            });
+            }
+          });
+        });
+      }
+
+      function CenterControl(controlDiv, map) {
+        //var chicago = {lat: 41.85, lng: -87.65};
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to show only the markers in upper-right quadrant';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Upper Right';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        controlUI.addEventListener('click', function() {
+          //map.setCenter(chicago);
+          upperRight();
+        });
+
+      }
+
+      // This is a test
+      function CenterControl1(controlDiv1, map) {
+        //var chicago = {lat: 41.85, lng: -87.65};
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to show only the markers in upper-left quadrant';
+        controlDiv1.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Upper Left';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        controlUI.addEventListener('click', function() {
+          //map.setCenter(chicago);
+          upperLeft();
+        });
+
+      }
 
       function downloadUrl(url, callback) {
         var request = window.ActiveXObject ?
@@ -82,9 +287,10 @@
 
         request.open('GET', url, true);
         request.send(null);
-      }
+      } 
 
       function doNothing() {}
+
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyIJzGBXjNTOfI4LQV-PSj2tR74jWtiuQ&callback=initMap">
