@@ -1,0 +1,308 @@
+<!DOCTYPE html >
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <title>Google Maps</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+<html>
+  <body>
+    <div id="map"></div>
+
+    <script type="text/javascript">         
+        function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(42.697510, 23.324150),
+          zoom: 12
+        });
+        geocoder = new google.maps.Geocoder();
+        var infoWindow = new google.maps.InfoWindow;
+
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+        var centerControlDiv1 = document.createElement('div1');
+        var centerControl1 = new CenterControl1(centerControlDiv1, map);
+
+        centerControlDiv.index = 1;
+        centerControlDiv1.index = 2;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv1);
+          
+          // Change this depending on the name of your PHP or XML file
+          downloadUrl('http://localhost/hello.php', function(data) {
+            var xml = data.responseXML;
+            var markers = xml.documentElement.getElementsByTagName('marker');
+            Array.prototype.forEach.call(markers, function(markerElem) {
+              var city = markerElem.getAttribute('city');
+              var name = markerElem.getAttribute('country');
+              var point = new google.maps.LatLng(
+                  parseFloat(markerElem.getAttribute('lat')),
+                  parseFloat(markerElem.getAttribute('lng')));
+
+              var infowincontent = document.createElement('div');
+              var strong = document.createElement('strong');
+              strong.textContent = city
+              infowincontent.appendChild(strong);
+              infowincontent.appendChild(document.createElement('br'));
+
+              var text = document.createElement('text');
+              //text.textContent = address
+              infowincontent.appendChild(text);
+              //var icon = customLabel[type] || {};
+              var marker = new google.maps.Marker({
+                map: map,
+                position: point,
+                //label: city
+              });
+              marker.addListener('click', function() {
+                infoWindow.setContent(infowincontent);
+                infoWindow.open(map, marker);
+              });
+            });
+          });
+        }
+
+      /** Function for the Upper right button */
+      function upperRight(){
+        /** Create .txt file and put the coordinates in it 
+        <?php
+          $file = '/var/www/html/coordinates.txt';
+          $current = "0.000000,0.000000,90.000000,180.000000";
+          $content = file_put_contents($file, $current);
+        ?> */
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(42.697510, 23.324150),
+          zoom: 12
+        });
+        geocoder = new google.maps.Geocoder();
+        var infoWindow = new google.maps.InfoWindow;
+
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+        var centerControlDiv1 = document.createElement('div1');
+        var centerControl1 = new CenterControl1(centerControlDiv1, map);
+
+        /** The controls for the two buttons */
+        centerControlDiv.index = 1;
+        centerControlDiv1.index = 2;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv1);
+
+        <?php
+          $file = '/var/www/html/coordinates.txt';
+          $current = "0.000000,0.000000,90.000000,180.000000";
+          $content = file_put_contents($file, $current);
+          $content = file_get_contents($file);
+          echo $content;
+          //echo "\n";
+        ?>
+
+        downloadUrl('http://localhost/hello.php', function(data) {
+          var xml = data.responseXML;
+          var markers = xml.documentElement.getElementsByTagName('marker');
+          Array.prototype.forEach.call(markers, function(markerElem) {
+            var city = markerElem.getAttribute('city');
+            var name = markerElem.getAttribute('country');
+            var point = new google.maps.LatLng(
+                parseFloat(markerElem.getAttribute('lat')),
+                parseFloat(markerElem.getAttribute('lng')));
+
+           // The filter should not be like this
+           //if(point.lat() >= 0 && point.lng() >= 0){
+
+            var infowincontent = document.createElement('div');
+            var strong = document.createElement('strong');
+            strong.textContent = city
+            infowincontent.appendChild(strong);
+            infowincontent.appendChild(document.createElement('br'));
+
+            var text = document.createElement('text');
+            //text.textContent = address
+            infowincontent.appendChild(text);
+            //var icon = customLabel[type] || {};
+            var marker = new google.maps.Marker({
+              map: map,
+              position: point,
+              //label: city
+            });
+            marker.addListener('click', function() {
+              infoWindow.setContent(infowincontent);
+              infoWindow.open(map, marker);
+            });
+            //}
+          });
+        });
+      }
+
+      /** Function for the Upper left button */
+      function upperLeft(){
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: new google.maps.LatLng(-42.697510, -23.324150),
+          zoom: 12
+        });
+        geocoder = new google.maps.Geocoder();
+        var infoWindow = new google.maps.InfoWindow;
+
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+        var centerControlDiv1 = document.createElement('div1');
+        var centerControl1 = new CenterControl1(centerControlDiv1, map);
+
+        centerControlDiv.index = 1;
+        centerControlDiv1.index = 2;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv1);
+
+        <?php
+          $file = '/var/www/html/coordinates.txt';
+          $current = '0.000000,0.000000,90.000000,180.000000';
+          $content = file_put_contents($file, $current);
+          $content = file_get_contents($file);
+          echo $content;
+          //echo "\n";
+        ?>
+
+        downloadUrl('http://localhost/hello.php', function(data) {
+          var xml = data.responseXML;
+          var markers = xml.documentElement.getElementsByTagName('marker');
+          Array.prototype.forEach.call(markers, function(markerElem) {
+            var city = markerElem.getAttribute('city');
+            var name = markerElem.getAttribute('country');
+            var point = new google.maps.LatLng(
+                parseFloat(markerElem.getAttribute('lat')),
+                parseFloat(markerElem.getAttribute('lng')));
+
+           // The filter should not be like this
+           //if(point.lat() >= 0 && point.lng() <= 0){
+
+            var infowincontent = document.createElement('div');
+            var strong = document.createElement('strong');
+            strong.textContent = city
+            infowincontent.appendChild(strong);
+            infowincontent.appendChild(document.createElement('br'));
+
+            var text = document.createElement('text');
+            //text.textContent = address
+            infowincontent.appendChild(text);
+            //var icon = customLabel[type] || {};
+            var marker = new google.maps.Marker({
+              map: map,
+              position: point,
+              //label: city
+            });
+            marker.addListener('click', function() {
+              infoWindow.setContent(infowincontent);
+              infoWindow.open(map, marker);
+            });
+            //}
+          });
+        });
+      }
+
+      function CenterControl(controlDiv, map) {
+        //var chicago = {lat: 41.85, lng: -87.65};
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to show only the markers in upper-right quadrant';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Upper Right';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        controlUI.addEventListener('click', function() {
+          //map.setCenter(chicago);
+          upperRight();
+        });
+
+      }
+
+      // This is a test
+      function CenterControl1(controlDiv1, map) {
+        //var chicago = {lat: 41.85, lng: -87.65};
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to show only the markers in upper-left quadrant';
+        controlDiv1.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'Upper Left';
+        controlUI.appendChild(controlText);
+
+        // Setup the click event listeners: simply set the map to Chicago.
+        controlUI.addEventListener('click', function() {
+          //map.setCenter(chicago);
+          upperLeft();
+        });
+
+      }
+
+      function downloadUrl(url, callback) {
+        var request = window.ActiveXObject ?
+            new ActiveXObject('Microsoft.XMLHTTP') :
+            new XMLHttpRequest;
+
+        request.onreadystatechange = function() {
+          if (request.readyState == 4) {
+            request.onreadystatechange = doNothing;
+            callback(request, request.status);
+          }
+        };
+
+        request.open('GET', url, true);
+        request.send(null);
+      } 
+
+      function doNothing() {}
+
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyIJzGBXjNTOfI4LQV-PSj2tR74jWtiuQ&callback=initMap">
+    </script>
+  </body>
+</html>
